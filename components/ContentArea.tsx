@@ -10,49 +10,50 @@ interface Props {
 const ContentArea: React.FC<Props> = ({ section }) => {
   return (
     <div className="flex-1 overflow-y-auto custom-scrollbar bg-slate-950">
-      <div className="max-w-6xl mx-auto p-6 lg:p-12 pb-24">
+      <div className="max-w-7xl mx-auto p-6 lg:p-12 pb-24">
         {/* Header Section */}
-        <header className="mb-12 animate-fadeIn text-center">
+        <header className="mb-12 animate-fadeIn text-center lg:text-left">
           <div className="inline-block px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold tracking-widest uppercase mb-4">
-            Module: {section.id.replace('-', ' ')}
+            AE Motion Module: {section.id.replace('-', ' ')}
           </div>
-          <h2 className="text-4xl lg:text-6xl font-black mb-6 tracking-tighter text-white">{section.title}</h2>
-          <p className="text-xl text-slate-400 leading-relaxed max-w-3xl mx-auto">
+          <h2 className="text-4xl lg:text-7xl font-black mb-6 tracking-tighter text-white">{section.title}</h2>
+          <p className="text-xl text-slate-400 leading-relaxed max-w-4xl">
             {section.description}
           </p>
         </header>
 
         {/* Large Primary Preview Section */}
-        <section className="mb-16">
+        <section className="mb-20">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-               <i className="fas fa-play-circle text-purple-500"></i> 多维动效示范 (Multiple Demonstrations)
+               <i className="fas fa-play-circle text-purple-500"></i> 实时动效示范库 (Live Animation Gallery)
             </h3>
-            <span className="text-xs text-slate-500 bg-slate-900 px-3 py-1 rounded-full border border-slate-800">
-              交互式实时预览
-            </span>
+            <div className="hidden sm:flex items-center gap-2 text-[10px] text-slate-500 bg-slate-900/50 px-3 py-1 rounded-full border border-slate-800">
+              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+              RENDER ENGINE ACTIVE
+            </div>
           </div>
           <MotionPreview type={section.previewType} />
         </section>
 
         {/* Detailed Info Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 border-t border-slate-900 pt-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 pt-12 border-t border-white/5">
           {/* Main Steps Column */}
           <div className="lg:col-span-7 space-y-12">
-            <section className="bg-slate-900/30 rounded-[2rem] p-10 border border-slate-800/50 backdrop-blur-sm">
-              <h3 className="text-2xl font-bold mb-8 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center shadow-lg shadow-purple-900/40">
-                  <i className="fas fa-list-ol text-white text-sm"></i>
+            <section className="bg-slate-900/20 rounded-[3rem] p-10 border border-white/5 backdrop-blur-sm shadow-2xl">
+              <h3 className="text-2xl font-bold mb-10 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-900/40">
+                  <i className="fas fa-terminal text-white text-sm"></i>
                 </div>
-                操作指南
+                核心制作步骤
               </h3>
-              <ul className="space-y-8">
+              <ul className="space-y-10">
                 {section.steps.map((step, i) => (
-                  <li key={i} className="flex gap-6 group">
-                    <span className="shrink-0 w-10 h-10 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-sm font-bold text-purple-400 shadow-xl group-hover:border-purple-500/50 transition-colors">
-                      {i + 1}
+                  <li key={i} className="flex gap-8 group">
+                    <span className="shrink-0 w-12 h-12 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-sm font-black text-purple-400 shadow-xl group-hover:border-purple-500/50 transition-all group-hover:scale-110">
+                      {String(i + 1).padStart(2, '0')}
                     </span>
-                    <p className="text-slate-300 text-lg leading-relaxed pt-1.5">{step}</p>
+                    <p className="text-slate-300 text-xl leading-snug pt-2 group-hover:text-white transition-colors">{step}</p>
                   </li>
                 ))}
               </ul>
@@ -65,18 +66,19 @@ const ContentArea: React.FC<Props> = ({ section }) => {
             {section.expression && (
               <section className="space-y-4">
                 <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                   <i className="fas fa-code"></i> 表达式参考 (Expressions)
+                   <i className="fas fa-magic text-purple-500"></i> AE 表达式
                 </h3>
-                <div className="bg-slate-900 rounded-3xl p-8 border border-slate-800 font-mono text-sm relative overflow-hidden group shadow-2xl">
+                <div className="bg-slate-900 rounded-[2.5rem] p-8 border border-white/5 font-mono text-sm relative overflow-hidden group shadow-inner">
                   <div className="absolute top-4 right-4">
                     <button 
                       onClick={() => navigator.clipboard.writeText(section.expression || '')}
-                      className="p-3 bg-slate-800 hover:bg-slate-700 rounded-xl text-slate-400 transition-all border border-slate-700"
+                      className="p-3 bg-slate-800/50 hover:bg-purple-600 hover:text-white rounded-xl text-slate-400 transition-all border border-slate-700"
+                      title="Copy Code"
                     >
                       <i className="far fa-copy"></i>
                     </button>
                   </div>
-                  <pre className="text-purple-300 overflow-x-auto whitespace-pre-wrap pr-12 text-base leading-relaxed">
+                  <pre className="text-purple-300 overflow-x-auto whitespace-pre-wrap pr-12 text-base leading-relaxed selection:bg-purple-500/30">
                     <code>{section.expression}</code>
                   </pre>
                 </div>
@@ -85,14 +87,14 @@ const ContentArea: React.FC<Props> = ({ section }) => {
 
             {/* Tips Section */}
             {section.tips && (
-              <section className="bg-indigo-600/5 rounded-3xl p-8 border border-indigo-500/10">
+              <section className="bg-indigo-600/5 rounded-[2.5rem] p-8 border border-indigo-500/10 shadow-lg">
                 <h4 className="text-sm font-bold text-indigo-400 uppercase tracking-widest mb-6 flex items-center gap-3">
-                   <i className="fas fa-star"></i> Pro Tips & 避坑指南
+                   <i className="fas fa-lightbulb"></i> 专家避坑指南
                 </h4>
-                <ul className="space-y-4">
+                <ul className="space-y-5">
                   {section.tips.map((tip, i) => (
-                    <li key={i} className="text-slate-400 flex gap-3 text-base leading-relaxed">
-                      <i className="fas fa-check-circle text-indigo-500/50 mt-1"></i>
+                    <li key={i} className="text-slate-400 flex gap-4 text-base leading-relaxed group">
+                      <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:scale-150 transition-transform"></div>
                       {tip}
                     </li>
                   ))}
@@ -101,12 +103,12 @@ const ContentArea: React.FC<Props> = ({ section }) => {
             )}
 
             {/* Practice Advice */}
-            <div className="bg-slate-900/30 border border-slate-800/50 rounded-3xl p-8">
+            <div className="bg-slate-900/30 border border-white/5 rounded-[2.5rem] p-8">
                <h4 className="text-sm font-bold text-slate-400 mb-4 uppercase flex items-center gap-2">
-                 <i className="fas fa-keyboard"></i> 实战练习
+                 <i className="fas fa-graduation-cap"></i> 课后实操建议
                </h4>
-               <p className="text-sm text-slate-500 leading-relaxed italic">
-                 "动效学习的核心是手感。" 尝试调节关键帧的“缓动控制点”，体验动画从“机械运动”到“自然流畅”的蜕变。
+               <p className="text-base text-slate-500 leading-relaxed italic">
+                 "动效的灵魂在于节奏。" 建议在 AE 中反复对比「线性关键帧」与「缓动关键帧」的视觉差异。
                </p>
             </div>
           </div>
